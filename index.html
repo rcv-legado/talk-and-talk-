@@ -29,7 +29,7 @@
             recognition.start();
 
             recognition.onresult = function(event) {
-                document.getElementById('said').value = 'I understood: ' + event.results[0][0].transcript;
+                document.getEementById('said').value = 'I understood: ' + event.results[0][0].transcript;
             };
 
             recognition.onerror = function(error) {
