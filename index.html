@@ -1,10 +1,27 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
 </head>
+
 <body>
+
+    <p>Say:</p>
+    <p>Can we take a picture?</p>
+
+    <button onclick="startRecognition()">Speak</button>
+    
+    <br>
+
+    <output id="said" name="" for=""></output>
+
     <script>
+
+        function startRecognition(){
+
+            document.getElementById('said').value = 'listening...'
+
             var recognition = new (webkitSpeechRecognition || mozSpeechRecognition || msSpeechRecognition)();
             recognition.lang = 'en-US';
             recognition.interimResults = false;
@@ -12,12 +29,14 @@
             recognition.start();
 
             recognition.onresult = function(event) {
-                console.log('You said: ', event.results[0][0].transcript);
+                document.getElementById('said').value = 'I understood: ' + event.results[0][0].transcript;
             };
 
             recognition.onerror = function(error) {
                 console.log(error);
             };
+        }
+            
         </script>
 </body>
 
