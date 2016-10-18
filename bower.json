@@ -1,0 +1,17 @@
+{
+  "name": "talk-and-talk-",
+  "homepage": "https://github.com/rafaelguinho/talk-and-talk-",
+  "authors": [
+    "Rafael Guinho Monteiro <rafaelguinho@outlook.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

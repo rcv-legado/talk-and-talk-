@@ -2,21 +2,33 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="" href="bower_components/angular-material/angular-material.css">
 </head>
 
-<body>
+<body layout="row" ng-controller="AppCtrl">
 
-    <p>Say:</p>
-    <p>Can we take a picture?</p>
+	<p>Say:</p>
+	<p>Can we take a picture?</p>
 
-    <button onclick="startRecognition()">Speak</button>
-    
-    <br>
+	<button onclick="startRecognition()">Speak</button>
 
-    <output id="said" name="" for=""></output>
+	<br>
 
-    <script>
+	<output id="said" name="" for=""></output>
+
+	<script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+
+
+<script>
+    angular.module('myApp', ['ngMaterial']);
+</script>
+	<script src="js/similarity.js"></script>
+	<script>
 
         function startRecognition(){
 
@@ -24,12 +36,14 @@
 
             var recognition = new (webkitSpeechRecognition || mozSpeechRecognition || msSpeechRecognition)();
             recognition.lang = 'en-US';
-            recognition.interimResults = false;
             recognition.maxAlternatives = 5;
             recognition.start();
 
             recognition.onresult = function(event) {
-                document.getEementById('said').value = 'I understood: ' + event.results[0][0].transcript;
+
+                console.log(Similarity.getSimilarity("Can we take a picture?", event.results[0][0].transcript));
+
+                document.getElementById('said').value = 'I understood: ' + event.results[0][0].transcript;
             };
 
             recognition.onerror = function(error) {
