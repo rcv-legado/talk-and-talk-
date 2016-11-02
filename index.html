@@ -8,10 +8,19 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<style>
-
-		.ActionGif{
-			padding: 10px;
-
+		.Phase {
+			font-weight: bold;
+			font-size: 12pt
+		}
+		
+		.ActionGif {
+			width: 90vw;
+			object-fit: cover;
+			margin-top: 1em
+		}
+		#content-phase{
+			text-align: center;
+			color: #821111
 		}
 		@font-face {
 			font-family: 'Material Icons';
@@ -36,28 +45,31 @@
 		</div>
 	</md-toolbar>
 
-	
+
 
 	<md-content class="md-padding" flex layout="column" ng-controller="AppCtrl" class="container">
 
 		<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
 
-		<md-card>
+		<md-card ng-if="determinateValue < 100">
 			<md-card-title>
 				<md-card-title-text>
 
-					<span class="md-headline"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
+					<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
 						<md-icon md-svg-src="app/img/icons/ic_record_voice_over_white_24px.svg" class="s24" aria-label="Cake"></md-icon>
 						</md-button> {{currentPhase}}</span>
 
-					<span class="md-subhead" ng-show="understood">I understood:</span>
-					<span class="md-headline">{{understood}}</span>
+
 
 				</md-card-title-text>
 			</md-card-title>
+
+			<md-card-content id="content-phase">
+				<span class="Phase">{{understood}}</span>
+			</md-card-content>
 			<md-card-actions layout="row" layout-align="end center">
 
-				<md-button ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
+				<md-button ng-disabled="success" ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
 					<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
 				</md-button>
 			</md-card-actions>
@@ -70,7 +82,7 @@
 			<img ng-if="fail" src="app/img/youfail.gif" alt="Listening" class="ActionGif">
 		</div>
 
-		<div ng-if="success" layout="row" layout-align="center center">
+		<div ng-if="success && determinateValue < 100" layout="row" layout-align="center center">
 			<md-button class="md-raised md-primary" ng-click="init()">Next</md-button>
 		</div>
 
