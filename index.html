@@ -3,55 +3,95 @@
 
 <head>
 	<meta charset="utf-8">
-    <link rel="stylesheet" type="" href="bower_components/angular-material/angular-material.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<style>
+
+		.ActionGif{
+			padding: 10px;
+
+		}
+		@font-face {
+			font-family: 'Material Icons';
+			font-style: normal;
+			font-weight: 400;
+			src: url(https://example.com/MaterialIcons-Regular.eot);
+			/* For IE6-8 */
+			src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+		}
+	</style>
+
 </head>
 
-<body layout="row" ng-controller="AppCtrl">
-
-	<p>Say:</p>
-	<p>Can we take a picture?</p>
-
-	<button onclick="startRecognition()">Speak</button>
-
-	<br>
-
-	<output id="said" name="" for=""></output>
-
-	<script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+<body class="carddemoBasicUsage" ng-app="myApp">
 
 
-<script>
-    angular.module('myApp', ['ngMaterial']);
-</script>
-	<script src="js/similarity.js"></script>
-	<script>
+	<md-toolbar md-scroll-shrink ng-if="true" ng-controller="TitleController">
+		<div class="md-toolbar-tools">
+			<h3>
+				<span>{{title}}</span>
+			</h3>
+		</div>
+	</md-toolbar>
 
-        function startRecognition(){
+	
 
-            document.getElementById('said').value = 'listening...'
+	<md-content class="md-padding" flex layout="column" ng-controller="AppCtrl" class="container">
 
-            var recognition = new (webkitSpeechRecognition || mozSpeechRecognition || msSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.maxAlternatives = 5;
-            recognition.start();
+		<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
 
-            recognition.onresult = function(event) {
+		<md-card>
+			<md-card-title>
+				<md-card-title-text>
 
-                console.log(Similarity.getSimilarity("Can we take a picture?", event.results[0][0].transcript));
+					<span class="md-headline"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
+						<md-icon md-svg-src="app/img/icons/ic_record_voice_over_white_24px.svg" class="s24" aria-label="Cake"></md-icon>
+						</md-button> {{currentPhase}}</span>
 
-                document.getElementById('said').value = 'I understood: ' + event.results[0][0].transcript;
-            };
+					<span class="md-subhead" ng-show="understood">I understood:</span>
+					<span class="md-headline">{{understood}}</span>
 
-            recognition.onerror = function(error) {
-                console.log(error);
-            };
-        }
-            
-        </script>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-actions layout="row" layout-align="end center">
+
+				<md-button ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
+					<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
+				</md-button>
+			</md-card-actions>
+		</md-card>
+
+		<div layout="row" layout-align="center center">
+			<img ng-if="listening" src="app/img/bob.gif" alt="Listening" class="ActionGif">
+			<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
+			<img ng-if="success" src="app/img/success.gif" alt="Listening" class="ActionGif">
+			<img ng-if="fail" src="app/img/youfail.gif" alt="Listening" class="ActionGif">
+		</div>
+
+		<div ng-if="success" layout="row" layout-align="center center">
+			<md-button class="md-raised md-primary" ng-click="init()">Next</md-button>
+		</div>
+
+	</md-content>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+
+	<script src="app/util/similarity.js"></script>
+	<script src="app/util/speaker.js"></script>
+	<script src="app/util/listener.js"></script>
+
+	<script src="app/app.js"></script>
+	<script src="app/controllers/appController.js"></script>
+	<script src="app/controllers/titleController.js"></script>
+
 </body>
 
 </html>
