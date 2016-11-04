@@ -16,6 +16,8 @@ app.controller('AppCtrl', function ($scope, $mdToast) {
         "Do you know where this hotel is?"
     ];
 
+    speechSynthesis.onvoiceschanged = function(){};
+
     $scope.determinateValue = 0;
     const step = 100 / allPhases.length;
 

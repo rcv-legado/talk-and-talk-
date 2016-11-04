@@ -1,22 +1,19 @@
 class Speaker {
     static speak(text) {
+        var voices = window.speechSynthesis.getVoices();
 
-        window.speechSynthesis.onvoiceschanged = function () {
+        let msg = new SpeechSynthesisUtterance();
+        msg.voiceURI = 'native';
+        msg.voice = voices[4];
+        msg.volume = 1;
+        msg.rate = 0.9;
+        msg.pitch = 1;
 
-            var voices = window.speechSynthesis.getVoices();
+        msg.lang = 'en-US';
+        msg.text = text;
+        speechSynthesis.speak(msg);
 
-            let msg = new SpeechSynthesisUtterance();
-            msg.voiceURI = 'native';
-            msg.voice = voices[4];
-            msg.volume = 1;
-            msg.rate = 0.9;
-            msg.pitch = 1;
+        return;
 
-            msg.lang = 'en-US';
-            msg.text = text;
-            speechSynthesis.speak(msg);
-
-            return;
-        }
     }
 }
