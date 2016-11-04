@@ -45,8 +45,6 @@
 		</div>
 	</md-toolbar>
 
-
-
 	<md-content class="md-padding" flex layout="column" ng-controller="AppCtrl" class="container">
 
 		<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
@@ -55,11 +53,9 @@
 			<md-card-title>
 				<md-card-title-text>
 
-					<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase, voices)">
+					<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
 						<md-icon md-svg-src="app/img/icons/ic_record_voice_over_white_24px.svg" class="s24" aria-label="Cake"></md-icon>
 						</md-button> {{currentPhase}}</span>
-
-
 
 				</md-card-title-text>
 			</md-card-title>
@@ -74,9 +70,9 @@
 				</md-button>
 			</md-card-actions>
 		</md-card>
-
+		
 		<div layout="row" layout-align="center center">
-			<img ng-if="listening" src="app/img/bob.gif" alt="Listening" class="ActionGif">
+			<img ng-if="listening" src="app/img/listening.gif" alt="Listening" class="ActionGif">
 			<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
 			<img ng-if="success" src="app/img/success.gif" alt="Listening" class="ActionGif">
 			<img ng-if="fail" src="app/img/youfail.gif" alt="Listening" class="ActionGif">

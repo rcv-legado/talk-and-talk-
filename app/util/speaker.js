@@ -2,9 +2,12 @@ class Speaker {
     static speak(text) {
 
         window.speechSynthesis.onvoiceschanged = function () {
+
+            var voices = window.speechSynthesis.getVoices();
+
             let msg = new SpeechSynthesisUtterance();
             msg.voiceURI = 'native';
-            msg.voice = speechSynthesis.getVoices()[4];
+            msg.voice = voices[4];
             msg.volume = 1;
             msg.rate = 0.9;
             msg.pitch = 1;
@@ -13,6 +16,7 @@ class Speaker {
             msg.text = text;
             speechSynthesis.speak(msg);
 
+            return;
         }
     }
 }
