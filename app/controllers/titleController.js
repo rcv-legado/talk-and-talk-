@@ -1,3 +1,3 @@
 app.controller('TitleController', function($scope) {
-  $scope.title = 'Talk Talk';
+  $scope.title = 'Talk talk';
 });

@@ -1,4 +1,4 @@
-app.controller('AppCtrl', function ($scope, $mdToast) {
+app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
 
     let allPhases = ["What airline am I flying?",
         "Where is the restroom?",
@@ -16,7 +16,7 @@ app.controller('AppCtrl', function ($scope, $mdToast) {
         "Do you know where this hotel is?"
     ];
 
-    speechSynthesis.onvoiceschanged = function(){};
+    speechSynthesis.onvoiceschanged = function () { };
 
     $scope.determinateValue = 0;
     const step = 100 / allPhases.length;
@@ -27,6 +27,22 @@ app.controller('AppCtrl', function ($scope, $mdToast) {
         $scope.understood = '';
         $scope.fail = false;
         $scope.success = false;
+    }
+
+    $scope.showAllPhasesDialog = function (ev) {
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'dialogAllPhasesDialog.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+            .then(function (answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function () {
+                $scope.status = 'You cancelled the dialog.';
+            });
     }
 
     $scope.readPhase = function (currentPhase) {
@@ -91,4 +107,20 @@ app.controller('AppCtrl', function ($scope, $mdToast) {
 
         return false;
     }
+
+
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function (answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+
 });

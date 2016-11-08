@@ -18,10 +18,12 @@
 			object-fit: cover;
 			margin-top: 1em
 		}
-		#content-phase{
+		
+		#content-phase {
 			text-align: center;
 			color: #821111
 		}
+		
 		@font-face {
 			font-family: 'Material Icons';
 			font-style: normal;
@@ -34,7 +36,7 @@
 
 </head>
 
-<body class="carddemoBasicUsage" ng-app="myApp">
+<body ng-app="myApp">
 
 
 	<md-toolbar md-scroll-shrink ng-if="true" ng-controller="TitleController">
@@ -45,32 +47,37 @@
 		</div>
 	</md-toolbar>
 
-	<md-content class="md-padding" flex layout="column" ng-controller="AppCtrl" class="container">
+<div ng-controller="AppCtrl">
+
+	<md-content class="md-padding" flex layout="column" layout-align="center center" class="container">
 
 		<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
 
-		<md-card ng-if="determinateValue < 100">
-			<md-card-title>
-				<md-card-title-text>
+		<h1 class="md-title">Say the phrase below</h1>
 
-					<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
+		<div layout-xs="row" flex-gt-xs="100" layout="column">
+			<md-card ng-if="determinateValue < 100">
+				<md-card-title>
+					<md-card-title-text>
+
+						<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
 						<md-icon md-svg-src="app/img/icons/ic_record_voice_over_white_24px.svg" class="s24" aria-label="Cake"></md-icon>
 						</md-button> {{currentPhase}}</span>
 
-				</md-card-title-text>
-			</md-card-title>
+					</md-card-title-text>
+				</md-card-title>
 
-			<md-card-content id="content-phase">
-				<span class="Phase">{{understood}}</span>
-			</md-card-content>
-			<md-card-actions layout="row" layout-align="end center">
+				<md-card-content id="content-phase">
+					<span class="Phase">{{understood}}</span>
+				</md-card-content>
+				<md-card-actions layout="row" layout-align="end center">
+					<md-button ng-disabled="success" ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
+						<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
+					</md-button>
+				</md-card-actions>
+			</md-card>
+		</div>
 
-				<md-button ng-disabled="success" ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
-					<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
-				</md-button>
-			</md-card-actions>
-		</md-card>
-		
 		<div layout="row" layout-align="center center">
 			<img ng-if="listening" src="app/img/listening.gif" alt="Listening" class="ActionGif">
 			<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
@@ -82,7 +89,15 @@
 			<md-button class="md-raised md-primary" ng-click="init()">Next</md-button>
 		</div>
 
+
+
 	</md-content>
+
+
+	<md-button class="md-fab md-fab-bottom-right" ng-click="showAllPhasesDialog($event)">
+		<md-icon md-svg-src="app/img/icons/ic_playlist_add_white_36px.svg" class="s32"></md-icon>
+	</md-button>
+</div>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -90,7 +105,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-
+	<script src="bower_components/lovefield/dist/lovefield.min.js"></script>
 
 	<script src="app/util/similarity.js"></script>
 	<script src="app/util/speaker.js"></script>
