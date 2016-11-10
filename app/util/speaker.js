@@ -9,7 +9,7 @@ class Speaker {
         msg.rate = 0.9;
         msg.pitch = 1;
 
-        msg.lang = 'en-US';
+        msg.lang = 'en-UK';
         msg.text = text;
         speechSynthesis.speak(msg);
 
