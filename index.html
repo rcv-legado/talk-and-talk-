@@ -6,33 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-	<style>
-		.Phase {
-			font-weight: bold;
-			font-size: 12pt
-		}
-		
-		.ActionGif {
-			width: 90vw;
-			object-fit: cover;
-			margin-top: 1em
-		}
-		
-		#content-phase {
-			text-align: center;
-			color: #821111
-		}
-		
-		@font-face {
-			font-family: 'Material Icons';
-			font-style: normal;
-			font-weight: 400;
-			src: url(https://example.com/MaterialIcons-Regular.eot);
-			/* For IE6-8 */
-			src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
-		}
-	</style>
+	<link href="styles/app.css" rel="stylesheet">
 
 </head>
 
@@ -47,57 +21,66 @@
 		</div>
 	</md-toolbar>
 
-<div ng-controller="AppCtrl">
+	<div class="loader">
+					<svg viewBox="0 0 32 32" width="32" height="32">
+						<circle id="ud811Spinner" cx="16" cy="16" r="14" fill="none"></circle>
+					</svg>
+				</div>
 
-	<md-content class="md-padding" flex layout="column" layout-align="center center" class="container">
+	<div ng-controller="AppCtrl" >
 
-		<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
+		<md-content ng-cloak class="md-padding" flex layout="column" layout-align="center center" class="container">
 
-		<h1 class="md-title">Say the phrase below</h1>
+			<md-progress-linear md-mode="determinate" value="{{determinateValue}}"></md-progress-linear>
 
-		<div layout-xs="row" flex-gt-xs="100" layout="column">
-			<md-card ng-if="determinateValue < 100">
-				<md-card-title>
-					<md-card-title-text>
+			<h1 class="md-title">Say the phrase below</h1>
 
-						<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
+			<div layout-xs="row" flex-gt-xs="100" layout="column">
+
+				
+
+				<md-card ng-if="determinateValue < 100">
+					<md-card-title>
+						<md-card-title-text>
+
+							<span class="Phase"><md-button class="md-fab md-mini md-primary" ng-click="readPhase(currentPhase)">
 						<md-icon md-svg-src="app/img/icons/ic_record_voice_over_white_24px.svg" class="s24" aria-label="Cake"></md-icon>
 						</md-button> {{currentPhase}}</span>
 
-					</md-card-title-text>
-				</md-card-title>
+						</md-card-title-text>
+					</md-card-title>
 
-				<md-card-content id="content-phase">
-					<span class="Phase">{{understood}}</span>
-				</md-card-content>
-				<md-card-actions layout="row" layout-align="end center">
-					<md-button ng-disabled="success" ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
-						<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
-					</md-button>
-				</md-card-actions>
-			</md-card>
-		</div>
+					<md-card-content id="content-phase">
+						<span class="Phase">{{appUnderstood}} {{interimResult}}</span>
+					</md-card-content>
+					<md-card-actions layout="row" layout-align="end center">
+						<md-button ng-disabled="success||listening" ng-click="startRecognition($event, currentPhase)" class="md-fab md-large md-warn" aria-label="Recognize my voice">
+							<md-icon md-svg-src="app/img/icons/ic_mic_white_24px.svg" class="s24"></md-icon>
+						</md-button>
+					</md-card-actions>
+				</md-card>
+			</div>
 
-		<div layout="row" layout-align="center center">
-			<img ng-if="listening" src="app/img/listening.gif" alt="Listening" class="ActionGif">
-			<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
-			<img ng-if="success" src="app/img/success.gif" alt="Listening" class="ActionGif">
-			<img ng-if="fail" src="app/img/youfail.gif" alt="Listening" class="ActionGif">
-		</div>
+			<div layout="row" layout-align="center center">
+				<img ng-if="listening" src="app/img/listening.gif" alt="Listening" class="ActionGif">
+				<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
+				<img ng-if="success" src="app/img/success.gif" alt="Listening" class="ActionGif">
+				<img ng-if="fail" src="app/img/youfail.gif" alt="Listening" class="ActionGif">
+			</div>
 
-		<div ng-if="success && determinateValue < 100" layout="row" layout-align="center center">
-			<md-button class="md-raised md-primary" ng-click="init()">Next</md-button>
-		</div>
-
-
-
-	</md-content>
+			<div ng-if="success && determinateValue < 100" layout="row" layout-align="center center">
+				<md-button class="md-raised md-primary" ng-click="init()">Next</md-button>
+			</div>
 
 
-	<md-button class="md-fab md-fab-bottom-right" ng-click="showAllPhasesDialog($event)">
-		<md-icon md-svg-src="app/img/icons/ic_playlist_add_white_36px.svg" class="s32"></md-icon>
-	</md-button>
-</div>
+
+		</md-content>
+
+
+		<md-button class="md-fab md-fab-bottom-right" ng-click="showAllPhasesDialog($event)">
+			<md-icon md-svg-src="app/img/icons/ic_playlist_add_white_36px.svg" class="s32"></md-icon>
+		</md-button>
+	</div>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>

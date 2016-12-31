@@ -1,0 +1,56 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.loader {
+    left: 50%;
+    top: 50%;
+    position: fixed;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.loader #ud811Spinner {
+    box-sizing: border-box;
+    stroke: #673AB7;
+    stroke-width: 3px;
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite;
+    animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    to {
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+
+.Phase {
+			font-weight: bold;
+			font-size: 12pt
+		}
+		
+		.ActionGif {
+			width: 90vw;
+			object-fit: cover;
+			margin-top: 1em
+		}
+		
+		#content-phase {
+			text-align: center;
+			color: #821111
+		}
+		
+		@font-face {
+			font-family: 'Material Icons';
+			font-style: normal;
+			font-weight: 400;
+			src: url(https://example.com/MaterialIcons-Regular.eot);
+			/* For IE6-8 */
+			src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+		}
