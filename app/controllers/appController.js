@@ -85,6 +85,10 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
         speechSynthesisUtterance.onend = function(){
             console.log('Stop talking..');
         }
+
+        SpeechSynthesisUtterance.onerror = function(err){
+            console.log(err);
+        }
     }
 
     $scope.init = function () {
