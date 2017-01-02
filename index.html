@@ -37,11 +37,11 @@
 
 			<h1 class="md-title">Say the phrase below</h1>
 
-			<div layout-xs="row" flex-gt-xs="100" layout="column">
+			<div class="PhaseContainer" layout-xs="row" flex-gt-xs="100" layout="column">
 
 				
 
-				<md-card ng-if="determinateValue < 100">
+				<md-card ng-if="determinateValue < 100" flex-gt-xs="100">
 					<md-card-title>
 						<md-card-title-text>
 
@@ -63,7 +63,7 @@
 				</md-card>
 			</div>
 
-			<div layout="row" layout-align="center center">
+			<div layout-xs="100" layout-gt-xs="50" layout="row" layout-align="center center">
 				<img ng-if="listening" src="app/img/listening.gif" alt="Listening" class="ActionGif">
 				<img ng-if="error" src="app/img/fail.gif" alt="Listening" class="ActionGif">
 				<img ng-if="success" src="app/img/success.gif" alt="Listening" class="ActionGif">

@@ -1,6 +1,7 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+    display: none !important;
 }
+
 .loader {
     left: 50%;
     top: 50%;
@@ -31,26 +32,46 @@
 }
 
 .Phase {
-			font-weight: bold;
-			font-size: 12pt
-		}
-		
-		.ActionGif {
-			width: 90vw;
-			object-fit: cover;
-			margin-top: 1em
-		}
-		
-		#content-phase {
-			text-align: center;
-			color: #821111
-		}
-		
-		@font-face {
-			font-family: 'Material Icons';
-			font-style: normal;
-			font-weight: 400;
-			src: url(https://example.com/MaterialIcons-Regular.eot);
-			/* For IE6-8 */
-			src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
-		}
+    font-weight: bold;
+    font-size: 12pt
+}
+
+@media screen and (max-width:600px) {
+    .ActionGif {
+        width: 90vw;
+    }
+}
+
+@media screen and (min-width:601px) and (max-width:950px) {
+    .ActionGif {
+        width: 50vw;
+    }
+}
+
+@media screen and (min-width:901px) {
+    .ActionGif {
+        height: 40vh;
+    }
+    .PhaseContainer{
+        width: 50%
+    }
+}
+
+.ActionGif {
+    object-fit: cover;
+    margin-top: 1em
+}
+
+#content-phase {
+    text-align: center;
+    color: #821111
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://example.com/MaterialIcons-Regular.eot);
+    /* For IE6-8 */
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
