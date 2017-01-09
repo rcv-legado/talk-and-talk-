@@ -1,4 +1,4 @@
-app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
+app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog, SentencesService) {
 
     speechSynthesis.onvoiceschanged = function () { };
 
@@ -10,6 +10,62 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
                 console.warn("Storage may be cleared by the UA under storage pressure.");
         });
     }
+
+
+    var sententesDb;
+    var tableDb;
+    function initDb() {
+        var defaultSentences = ["What airline am I flying?",
+            "Where is the restroom?",
+            "How much does the magazine cost?",
+            "May I purchase headphones?",
+            "How do I access the Internet?",
+            "Where can I find a restaurant?",
+            "I have lost my passport.",
+            "Someone stole my money.",
+            "Where is the hospital?",
+            "Where can I find a grocery store?",
+            "My room is messy, and I would like it cleaned.",
+            "I would like two double beds, please.",
+            "How many beds are in the room?",
+            "Do you know where this hotel is?",
+            "Didn't even last a minute"
+        ];
+
+        var schemaBuilder = lf.schema.create('sentences', 1);
+
+        schemaBuilder.createTable('Sentence').
+            addColumn('id', lf.Type.INTEGER).
+            addColumn('content', lf.Type.STRING).
+            addColumn('lastPractice', lf.Type.DATE_TIME).
+            addNullable(['lastPractice']).
+            addPrimaryKey(['id'], true);
+
+        schemaBuilder.connect().then((db) => {
+            sententesDb = db;
+            tableDb = sententesDb.getSchema().table('Sentence');
+
+            for (var i = 0; i < defaultSentences.length; i++) {
+
+                var row = tableDb.createRow({
+                    'id': i,
+                    'content': defaultSentences[i],
+                    'lastPractice': null
+                });
+
+                sententesDb.insertOrReplace().into(tableDb).values([row]).exec();
+            }
+
+            SentencesService.get(sententesDb, tableDb).then(function (data) {
+                console.log(data);
+            });
+
+        });
+
+    }
+
+    initDb();
+
 
     let allPhases = ["What airline am I flying?",
         "Where is the restroom?",
@@ -30,7 +86,7 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
 
 
     $scope.determinateValue = 0;
-    const step = 100 / allPhases.length;
+    $scope.maxValue = allPhases.length - 1;
 
     $scope.appUnderstood = null;
 
@@ -78,15 +134,15 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
         speechSynthesisUtterance.text = currentPhase;
         Speaker.speak(speechSynthesisUtterance);
 
-        speechSynthesisUtterance.onstart = function(){
+        speechSynthesisUtterance.onstart = function () {
             console.log('Talking..');
         }
 
-        speechSynthesisUtterance.onend = function(){
+        speechSynthesisUtterance.onend = function () {
             console.log('Stop talking..');
         }
 
-        SpeechSynthesisUtterance.onerror = function(err){
+        SpeechSynthesisUtterance.onerror = function (err) {
             console.log(err);
         }
     }
@@ -101,7 +157,7 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
 
         initParameters();
 
-            $scope.readPhase($scope.currentPhase);
+        $scope.readPhase($scope.currentPhase);
     }
 
     $scope.init();
@@ -165,7 +221,7 @@ app.controller('AppCtrl', function ($scope, $mdToast, $mdDialog) {
             if (isSimilar(similarity)) {
                 recognition.stop();
                 $scope.success = true;
-                $scope.determinateValue += step;
+                $scope.determinateValue += 1;
 
                 if ($scope.determinateValue >= 100) $scope.showSimpleToast('You did!');
             }

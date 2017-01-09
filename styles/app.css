@@ -31,6 +31,55 @@
     }
 }
 
+
+
+
+progress {
+	width: 400px;
+	height: 15px;
+	margin: 10px auto;
+	display: block;
+	/* Important Thing */
+	-webkit-appearance: none;
+	border: none;
+}
+
+/* All good till now. Now we'll style the background */
+progress::-webkit-progress-bar {
+	background: white;
+    border: 1px solid #ddd;
+	border-radius: 50px;
+	padding: 1px;
+}
+
+/* Now the value part */
+progress::-webkit-progress-value {
+	border-radius: 50px;
+	background:
+		-webkit-linear-gradient(45deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
+		
+		-webkit-linear-gradient(left, #FF9800, #EF6C00);
+	
+	/* Looks great, now animating it */
+	background-size: 25px 14px, 100% 100%, 100% 100%;
+	-webkit-animation: move 5s linear 0 infinite;
+}
+
+/* That's it! Now let's try creating a new stripe pattern and animate it using animation and keyframes properties  */
+
+@-webkit-keyframes move {
+	0% {background-position: 0px 0px, 0 0, 0 0}
+	100% {background-position: -100px 0px, 0 0, 0 0}
+}
+
+#sentence-card-title{
+    padding: 10px 6px 6px
+}
+#content-phase{
+    padding: 6px;
+    min-height: 17px
+}
+
 .Phase {
     font-weight: bold;
     font-size: 12pt
@@ -40,11 +89,17 @@
     .ActionGif {
         width: 90vw;
     }
+    progress {
+        width: 100%;
+    }
 }
 
 @media screen and (min-width:601px) and (max-width:950px) {
     .ActionGif {
         width: 50vw;
+    }
+    progress {
+        width: 100%;
     }
 }
 
@@ -52,8 +107,11 @@
     .ActionGif {
         height: 40vh;
     }
-    .PhaseContainer{
+    .PhaseContainer {
         width: 50%
+    }
+    progress {
+        width: 80%;
     }
 }
 
